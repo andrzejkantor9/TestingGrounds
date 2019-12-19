@@ -3,9 +3,13 @@
 
 #include "ChooseWaypoint.h"
 
+#include "BehaviorTree/BlackboardComponent.h"
+
 EBTNodeResult::Type UChooseWaypoint::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
-	UE_LOG(LogTemp, Warning, TEXT("DONKEY"));
+	UBlackboardComponent* BlackboardComp = OwnerComp.GetBlackboardComponent();
+	auto Index = BlackboardComp->GetValueAsInt(IndexKey.SelectedKeyName);
+	UE_LOG(LogTemp, Warning, TEXT("Waypoint index: %i"), Index);
 
 	return EBTNodeResult::Succeeded;
 }
