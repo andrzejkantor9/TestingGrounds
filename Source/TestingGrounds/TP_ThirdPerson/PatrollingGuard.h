@@ -13,7 +13,7 @@ UCLASS()
 class TESTINGGROUNDS_API APatrollingGuard : public ATP_ThirdPersonCharacter
 {
 	GENERATED_BODY()
-	
+
 public:
 	//TODO remove public modifier
 	UPROPERTY(EditInstanceOnly, Category = "Patrolling")
