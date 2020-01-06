@@ -119,5 +119,6 @@ public:
 		TSubclassOf<class AGun> GunBlueprint;
 
 private:
-	AGun* Gun;
+	AGun* Gun = nullptr;
+	//UInputComponent* InputComponent;
 };

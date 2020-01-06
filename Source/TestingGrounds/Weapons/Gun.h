@@ -24,12 +24,13 @@ public:
 	// Sets default values for this actor's properties
 	AGun();
 
+	/** Fires a projectile. */
+	UFUNCTION(BlueprintCallable, Category = "Gun")
+	void OnFire();
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-
-	/** Fires a projectile. */
-	void OnFire();
 
 public:	
 	// Called every frame

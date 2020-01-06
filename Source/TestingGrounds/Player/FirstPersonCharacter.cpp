@@ -13,6 +13,8 @@
 
 //#include "../Weapons/BallProjectile.h"
 //#include "Animation/AnimInstance.h"
+#include "Components/InputComponent.h"
+
 #include "../Weapons/Gun.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogFPChar, Warning, All);
@@ -85,6 +87,9 @@ void AFirstPersonCharacter::BeginPlay()
 	{
 		Gun = GetWorld()->SpawnActor<AGun>(GunBlueprint);
 		Gun->AttachToComponent(Mesh1P, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("GripPoint"));
+		Gun->AnimInstance = Mesh1P->GetAnimInstance();
+		// Bind fire event
+		InputComponent->BindAction("Fire", IE_Pressed, Gun, &AGun::OnFire);
 	}	
 
 	// Show or hide the two versions of the gun based on whether or not we're using motion controllers.
@@ -107,14 +112,11 @@ void AFirstPersonCharacter::SetupPlayerInputComponent(class UInputComponent* Pla
 {
 	// set up gameplay key bindings
 	check(PlayerInputComponent);
+	//InputComponent = PlayerInputComponent;
 
 	// Bind jump events
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
 	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
-
-	// Bind fire event
-	//TODO move to gun.cpp
-	//PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &AFirstPersonCharacter::OnFire);
 
 	// Enable touchscreen input
 	EnableTouchscreenMovement(PlayerInputComponent);
@@ -147,7 +149,7 @@ void AFirstPersonCharacter::BeginTouch(const ETouchIndex::Type FingerIndex, cons
 	}
 	if ((FingerIndex == TouchItem.FingerIndex) && (TouchItem.bMoved == false))
 	{
-		//OnFire();
+		Gun->OnFire();
 	}
 	TouchItem.bIsPressed = true;
 	TouchItem.FingerIndex = FingerIndex;
