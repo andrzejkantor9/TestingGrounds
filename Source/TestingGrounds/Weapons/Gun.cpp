@@ -7,6 +7,8 @@
 #include "BallProjectile.h"
 #include "Kismet/GameplayStatics.h"
 
+#include "TimerManager.h"
+
 // Sets default values
 AGun::AGun()
 {
@@ -41,10 +43,32 @@ void AGun::Tick(float DeltaTime)
 
 }
 
+void AGun::AllowShooting()
+{
+	bCanShoot = true;
+	if (GetWorld())
+	{
+		GetWorld()->GetTimerManager().ClearTimer(ShootTimerHandle);
+	}
+}
+
 
 void AGun::OnFire()
 {
 	// try and fire a projectile
+	if (!bCanShoot)
+	{
+		return;
+	}
+	else
+	{
+		bCanShoot = false;
+		FTimerDelegate ShootingTimerDelegate;
+		ShootingTimerDelegate.BindUFunction(this, FName("AllowShooting"));
+
+		GetWorldTimerManager().SetTimer(ShootTimerHandle, ShootingTimerDelegate, .1f, false, .4f);
+
+	}
 	if (ProjectileClass != NULL)
 	{
 		UWorld* const World = GetWorld();

@@ -49,4 +49,11 @@ public:
 		class UAnimMontage* FireAnimation;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
 		class UAnimInstance* AnimInstance;
+
+private:
+	bool bCanShoot = true;
+	FTimerHandle ShootTimerHandle;
+
+	UFUNCTION()
+		void AllowShooting();
 };
