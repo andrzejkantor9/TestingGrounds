@@ -5,8 +5,6 @@
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/SkeletalMeshComponent.h"
-#include "Components/InputComponent.h"
-#include "TimerManager.h"
 
 #include "../Weapons/Gun.h"
 
@@ -45,12 +43,6 @@ void ABaseCharacter::BeginPlay()
 		Gun->AnimInstance = FirstPersonArmsComponent->GetAnimInstance();
 		// Bind fire event
 		//InputComponent->BindAction("Fire", IE_Pressed, Gun, &AGun::OnFire);
-		if (InputComponent)
-		{
-			InputComponent->BindAction("Fire", IE_Pressed, this, &ABaseCharacter::PullTrigger);
-			InputComponent->BindAction("Fire", IE_Released, this, &ABaseCharacter::StopFiring);
-			//InputComponent = nullptr;
-		}
 	}
 }
 
@@ -66,19 +58,7 @@ void ABaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 }
 
-void ABaseCharacter::PullTrigger()
+void ABaseCharacter::Fire()
 {
-	FTimerDelegate ShootingTimerDelegate;
-	ShootingTimerDelegate.BindUFunction(Gun, FName("OnFire"));
-
-	GetWorldTimerManager().SetTimer(ShootTimerHandle, ShootingTimerDelegate, .5f, true, .5f);
 	Gun->OnFire();
-}
-
-void ABaseCharacter::StopFiring()
-{
-	if (ensure(GetWorld()))
-	{
-		GetWorld()->GetTimerManager().ClearTimer(ShootTimerHandle);
-	}
 }

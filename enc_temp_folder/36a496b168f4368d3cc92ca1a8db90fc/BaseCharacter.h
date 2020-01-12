@@ -27,13 +27,9 @@ protected:
 private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 		AGun* Gun = nullptr;
-
-	FTimerHandle ShootTimerHandle;
 public:
 	UFUNCTION(BlueprintCallable, Category = "Shooting")
-		void PullTrigger();
-	UFUNCTION(BlueprintCallable, Category = "Shooting")
-		void StopFiring();
+		void Fire();
 public:
 	ABaseCharacter();
 
