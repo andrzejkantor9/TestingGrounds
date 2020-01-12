@@ -15,7 +15,7 @@ class AFirstPersonCharacter : public ACharacter
 
 	/** Pawn mesh: 1st person view (arms; seen only by self) */
 	UPROPERTY(VisibleDefaultsOnly, Category=Mesh)
-	class USkeletalMeshComponent* Mesh1P;
+	class USkeletalMeshComponent* FirstPersonArmsComponent;
 
 	/** Gun mesh: VR view (attached to the VR controller directly, no arm, just the actual gun) */
 	UPROPERTY(VisibleDefaultsOnly, Category = Mesh)
@@ -111,7 +111,7 @@ protected:
 
 public:
 	/** Returns Mesh1P subobject **/
-	FORCEINLINE class USkeletalMeshComponent* GetMesh1P() const { return Mesh1P; }
+	FORCEINLINE class USkeletalMeshComponent* GetMesh1P() const { return FirstPersonArmsComponent; }
 	/** Returns FirstPersonCameraComponent subobject **/
 	FORCEINLINE class UCameraComponent* GetFirstPersonCameraComponent() const { return FirstPersonCameraComponent; }
 

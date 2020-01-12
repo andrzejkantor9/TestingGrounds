@@ -38,13 +38,13 @@ AFirstPersonCharacter::AFirstPersonCharacter()
 	FirstPersonCameraComponent->bUsePawnControlRotation = true;
 
 	// Create a mesh component that will be used when being viewed from a '1st person' view (when controlling this pawn)
-	Mesh1P = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("CharacterMesh1P"));
-	Mesh1P->SetOnlyOwnerSee(true);
-	Mesh1P->SetupAttachment(FirstPersonCameraComponent);
-	Mesh1P->bCastDynamicShadow = false;
-	Mesh1P->CastShadow = false;
-	Mesh1P->RelativeRotation = FRotator(1.9f, -19.19f, 5.2f);
-	Mesh1P->RelativeLocation = FVector(-0.5f, -4.4f, -155.7f);
+	FirstPersonArmsComponent = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("CharacterMesh1P"));
+	FirstPersonArmsComponent->SetOnlyOwnerSee(true);
+	FirstPersonArmsComponent->SetupAttachment(FirstPersonCameraComponent);
+	FirstPersonArmsComponent->bCastDynamicShadow = false;
+	FirstPersonArmsComponent->CastShadow = false;
+	FirstPersonArmsComponent->RelativeRotation = FRotator(1.9f, -19.19f, 5.2f);
+	FirstPersonArmsComponent->RelativeLocation = FVector(-0.5f, -4.4f, -155.7f);
 
 	// Default offset from the character location for projectiles to spawn
 	GunOffset = FVector(100.0f, 0.0f, 10.0f);
@@ -86,8 +86,8 @@ void AFirstPersonCharacter::BeginPlay()
 	if (ensure(GunBlueprint))
 	{
 		Gun = GetWorld()->SpawnActor<AGun>(GunBlueprint);
-		Gun->AttachToComponent(Mesh1P, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("GripPoint"));
-		Gun->AnimInstance = Mesh1P->GetAnimInstance();
+		Gun->AttachToComponent(FirstPersonArmsComponent, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("GripPoint"));
+		Gun->AnimInstance = FirstPersonArmsComponent->GetAnimInstance();
 		// Bind fire event
 		InputComponent->BindAction("Fire", IE_Pressed, Gun, &AGun::OnFire);
 	}	
@@ -96,12 +96,12 @@ void AFirstPersonCharacter::BeginPlay()
 	if (bUsingMotionControllers)
 	{
 		VR_Gun->SetHiddenInGame(false, true);
-		Mesh1P->SetHiddenInGame(true, true);
+		FirstPersonArmsComponent->SetHiddenInGame(true, true);
 	}
 	else
 	{
 		VR_Gun->SetHiddenInGame(true, true);
-		Mesh1P->SetHiddenInGame(false, true);
+		FirstPersonArmsComponent->SetHiddenInGame(false, true);
 	}
 }
 
