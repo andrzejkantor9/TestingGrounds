@@ -15,6 +15,10 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+		FVector MinLocation = FVector(-300.000000, -2200.000000, -1100.000000);
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+		FVector MaxLocation = FVector(3000.000000, 750.000000, -1100.000000);
 public:	
 	// Sets default values for this actor's properties
 	ATile();
@@ -23,5 +27,5 @@ public:
 
 
 	UFUNCTION(BlueprintCallable, Category = "Levels")
-		void PlaceActors();
+		void PlaceActors(TSubclassOf<AActor> ToSpawn, int MinSpawn, int MaxSpawn);
 };

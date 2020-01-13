@@ -25,15 +25,24 @@ void ATile::Tick(float DeltaTime)
 
 }
 
-void ATile::PlaceActors()
+void ATile::PlaceActors(TSubclassOf<AActor> ToSpawn, int MinSpawn, int MaxSpawn)
 {
-	FVector Min(0, -2000, 0);
-	FVector Max(4000, 2000, 0);
-	FBox Bounds(Min, Max);
-	for (size_t i = 0; i < 20; i++)
+	//FVector Min(0, -2000, -1000);
+	//FVector Max(4000, 2000, -1000); 
+	FBox Bounds(MinLocation, MaxLocation);
+	int32 NumberToSpawn = FMath::RandRange(MinSpawn, MaxSpawn); 
+	for (size_t i = 0; i < NumberToSpawn; i++)
 	{
 		FVector SpawnPoint = FMath::RandPointInBox(Bounds);
-		UE_LOG(LogTemp, Warning, TEXT("SpawnPoint: %s"), *SpawnPoint.ToCompactString());
+		AActor* Spawned = nullptr;
+		if(ensure(GetWorld()))
+			Spawned = GetWorld()->SpawnActor<AActor>(ToSpawn);
+		if (Spawned)
+		{
+			Spawned->SetActorRelativeLocation(SpawnPoint);
+			Spawned->AttachToActor(this, FAttachmentTransformRules(EAttachmentRule::KeepRelative, false));
+		}
+		//UE_LOG(LogTemp, Warning, TEXT("SpawnPoint: %s"), *SpawnPoint.ToCompactString());
 	}
 }
 
