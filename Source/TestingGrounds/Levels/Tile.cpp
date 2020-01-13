@@ -27,7 +27,7 @@ void ATile::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	CastSphere(GetActorLocation(), 300);
-	CastSphere(GetActorLocation()+ FVector(0, 0, 1000), 300);
+	//CastSphere(GetActorLocation()+ FVector(0, 0, 1000), 300);
 }
 
 void ATile::PlaceActors(TSubclassOf<AActor> ToSpawn, int MinSpawn, int MaxSpawn)
@@ -63,11 +63,12 @@ bool ATile::CastSphere(FVector Location, float Radius)
 			Location,
 			Location,
 			FQuat::Identity,
-			ECollisionChannel::ECC_Camera,
+			ECollisionChannel::ECC_GameTraceChannel2,
 			FCollisionShape::MakeSphere(Radius)
 		);
 		ResultColor = HasHit ? FColor::Red : FColor::Green;
-		DrawDebugSphere(GetWorld(), Location, Radius, 10, ResultColor, true, 100);
+		DrawDebugCapsule(GetWorld(), Location, 0, Radius, FQuat::Identity, ResultColor, true, 100);
+		return HasHit;
 	}
 	
 	return false;
