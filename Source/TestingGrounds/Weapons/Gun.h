@@ -45,10 +45,15 @@ public:
 		class USoundBase* FireSound;
 
 	/** AnimMontage to play each time we fire */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
-		class UAnimMontage* FireAnimation;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
-		class UAnimInstance* AnimInstance;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Gameplay")
+		class UAnimMontage* FPFireAnimation;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Gameplay")
+		class UAnimMontage* TPFireAnimation;
+
+	UPROPERTY()
+		class UAnimInstance* FPAnimInstance;
+	UPROPERTY()
+		class UAnimInstance* TPAnimInstance;
 
 private:
 	bool bCanShoot = true;

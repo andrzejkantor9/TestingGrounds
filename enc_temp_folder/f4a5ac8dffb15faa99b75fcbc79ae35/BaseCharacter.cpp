@@ -81,7 +81,7 @@ void ABaseCharacter::UnPossessed()
 	Super::UnPossessed();
 
 	if(Gun)
-		Gun->AttachToComponent(GetMesh(), FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("GripPoint")); //skeleton is not yet created in constructor
+		Gun->AttachToComponent(GetMesh(), FAttachmentTransformRules(EAttachmentRule::SnapToTarget, true), TEXT("GripPoint_0")); //skeleton is not yet created in constructor
 }
 
 void ABaseCharacter::PullTrigger()
