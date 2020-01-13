@@ -3,6 +3,9 @@
 
 #include "Tile.h"
 
+#include "Runtime/Engine/Public/WorldCollision.h"
+#include "DrawDebugHelpers.h"
+
 // Sets default values
 ATile::ATile()
 {
@@ -23,6 +26,8 @@ void ATile::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	CastSphere(GetActorLocation(), 300);
+	CastSphere(GetActorLocation()+ FVector(0, 0, 1000), 300);
 }
 
 void ATile::PlaceActors(TSubclassOf<AActor> ToSpawn, int MinSpawn, int MaxSpawn)
@@ -44,5 +49,27 @@ void ATile::PlaceActors(TSubclassOf<AActor> ToSpawn, int MinSpawn, int MaxSpawn)
 		}
 		//UE_LOG(LogTemp, Warning, TEXT("SpawnPoint: %s"), *SpawnPoint.ToCompactString());
 	}
+}
+
+bool ATile::CastSphere(FVector Location, float Radius)
+{
+	FHitResult HitResult;
+	FColor ResultColor;
+	bool HasHit;
+	if (ensure(GetWorld()))
+	{
+		HasHit = GetWorld()->SweepSingleByChannel(
+			HitResult,
+			Location,
+			Location,
+			FQuat::Identity,
+			ECollisionChannel::ECC_Camera,
+			FCollisionShape::MakeSphere(Radius)
+		);
+		ResultColor = HasHit ? FColor::Red : FColor::Green;
+		DrawDebugSphere(GetWorld(), Location, Radius, 10, ResultColor, true, 100);
+	}
+	
+	return false;
 }
 
