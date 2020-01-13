@@ -48,8 +48,8 @@ void ATile::PlaceActors(TSubclassOf<AActor> ToSpawn, int MinSpawn, int MaxSpawn,
 
 bool ATile::FindEmptyLocation(FVector& OutLocation, float Radius)
 {
-	FVector Min(0, -2000, 200);//z -1000 / -1100
-	FVector Max(4000, 2000, 200); 
+	FVector Min(0, -2000, -1100);//z -1000
+	FVector Max(4000, 2000, -1100); 
 	FBox Bounds(Min, Max);
 	//FBox Bounds(MinLocation, MaxLocation);
 	const int MAX_ATTEMPTS = 100;
