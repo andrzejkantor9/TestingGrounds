@@ -92,37 +92,24 @@ void ATile::PlaceActors(TSubclassOf<AActor> ToSpawn, int MinSpawn, int MaxSpawn,
 
 void ATile::DelayedPlaceActors(TSubclassOf<AActor> ToSpawn, int MinSpawn, int MaxSpawn, float Radius, float MinScale, float MaxScale)
 {
-	TArray<FSpawnPosition> SpawnPositions = RandomSpawnPositions(MinSpawn, MaxSpawn, Radius, MinScale, MaxScale);
-
-	for (FSpawnPosition SpawnPosition : SpawnPositions)
-	{
-		PlaceActor(ToSpawn, SpawnPosition);
-	}
-}
-
-TArray<FSpawnPosition> ATile::RandomSpawnPositions(int MinSpawn, int MaxSpawn, float Radius, float MinScale, float MaxScale)
-{
 	TArray<FSpawnPosition> SpawnPositions;
-	int32 NumberToSpawn = FMath::RandRange(MinSpawn, MaxSpawn);
+	int32 NumberToSpawn = FMath::RandRange(MinSpawn, MaxSpawn); 
 	for (size_t i = 0; i < NumberToSpawn; i++)
 	{
 		FSpawnPosition SpawnPosition;
 		SpawnPosition.Scale = FMath::RandRange(MinScale, MaxScale);
 		if (FindEmptyLocation(SpawnPosition.Location, Radius * SpawnPosition.Scale))
 		{
-			SpawnPosition.Rotation = FMath::RandRange(-180.f, 180.f);
+			SpawnPosition.Rotation= FMath::RandRange(-180.f, 180.f);
 			//reduce hitches
 			FTimerHandle SpawnMeshesTimerHandle;
 			FTimerDelegate SpawnMeshesTimerDelegate;
 
-			//SpawnMeshesTimerDelegate.BindUFunction(this, FName("PlaceActor"), ToSpawn, SpawnPosition.Location, SpawnPosition.Rotation, SpawnPosition.Scale);
-			//GetWorldTimerManager().SetTimer(SpawnMeshesTimerHandle, SpawnMeshesTimerDelegate, .002f * static_cast<float>(i), false);
-			SpawnPositions.Add(SpawnPosition);
+			SpawnMeshesTimerDelegate.BindUFunction(this, FName("PlaceActor"), ToSpawn, SpawnPosition.Location, SpawnPosition.Rotation, SpawnPosition.Scale);
+			GetWorldTimerManager().SetTimer(SpawnMeshesTimerHandle, SpawnMeshesTimerDelegate, .002f * static_cast<float>(i), false);
 			//PlaceActor(ToSpawn, SpawnPoint, RandomRotation, RandomScale);
-		}
+		}	
 	}
-
-	return SpawnPositions;
 }
 
 
