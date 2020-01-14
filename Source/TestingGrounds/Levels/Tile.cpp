@@ -48,7 +48,8 @@ void ATile::PlaceActors(TSubclassOf<AActor> ToSpawn, int MinSpawn, int MaxSpawn,
 	//TODO write simple timer like BP Delay
 	//reduce hitches
 	SpawnMeshesTimerDelegate.BindUFunction(this, FName("DelayedPlaceActors"), ToSpawn, MinSpawn, MaxSpawn, Radius, MinScale, MaxScale);
-	GetWorldTimerManager().SetTimer(SpawnMeshesTimerHandle, SpawnMeshesTimerDelegate, .2f, false);
+	GetWorldTimerManager().SetTimer(SpawnMeshesTimerHandle, SpawnMeshesTimerDelegate, .2f * TimesCalled, false);
+	TimesCalled += 1.f;
 	//DelayedPlaceActors(ToSpawn, MinSpawn, MaxSpawn, Radius, MinScale, MaxScale);
 }
 
@@ -70,7 +71,7 @@ void ATile::DelayedPlaceActors(TSubclassOf<AActor> ToSpawn, int MinSpawn, int Ma
 			FTimerHandle SpawnMeshesTimerHandle;
 			FTimerDelegate SpawnMeshesTimerDelegate;
 			SpawnMeshesTimerDelegate.BindUFunction(this, FName("PlaceActor"), ToSpawn, SpawnPoint, RandomRotation, RandomScale);
-			GetWorldTimerManager().SetTimer(SpawnMeshesTimerHandle, SpawnMeshesTimerDelegate, .01f * static_cast<float>(i), false);
+			GetWorldTimerManager().SetTimer(SpawnMeshesTimerHandle, SpawnMeshesTimerDelegate, .002f * static_cast<float>(i), false);
 
 			//PlaceActor(ToSpawn, SpawnPoint, RandomRotation, RandomScale);
 		}	

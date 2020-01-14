@@ -34,7 +34,7 @@ public:
 
 private:
 	UActorPool* Pool;
-
+	float TimesCalled = 1.f;
 	UFUNCTION()
 	void DelayedPlaceActors(TSubclassOf<AActor> ToSpawn, int MinSpawn = 1, int MaxSpawn = 1, float Radius = 500.f, float MinScale = 1.f, float MaxScale = 1.f);
 
