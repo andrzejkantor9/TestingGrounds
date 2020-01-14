@@ -19,8 +19,8 @@ void ATile::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	CanSpawnAtLocation(GetActorLocation(), 300);
-	//CastSphere(GetActorLocation()+ FVector(0, 0, 1000), 300);
+	//CanSpawnAtLocation(GetActorLocation(), 300);
+
 }
 
 // Called every frame
