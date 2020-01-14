@@ -42,6 +42,8 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Levels")
 		void PlaceActors(TSubclassOf<AActor> ToSpawn, int MinSpawn = 1, int MaxSpawn = 1, float Radius = 500.f, float MinScale = 1.f, float MaxScale = 1.f);
+	UFUNCTION(BlueprintCallable, Category = "Levels")
+		void PlaceAIPawns(TSubclassOf<APawn> ToSpawn, int MinSpawn = 1, int MaxSpawn = 1, float Radius = 500.f);
 
 	UFUNCTION(BlueprintCallable, Category = "Pool")
 		void SetPool(class UActorPool* Pool);
@@ -62,4 +64,6 @@ private:
 	void PlaceActor(TSubclassOf<AActor> ToSpawn, const FSpawnPosition& SpawnPosition);
 
 	void PositionNavMeshBoundsVolume();
+
+	void PlaceAIPawn(TSubclassOf<APawn> ToSpawn, FSpawnPosition SpawnPosition);
 };
