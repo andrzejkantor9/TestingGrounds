@@ -20,8 +20,21 @@ ATile::ATile()
 void ATile::SetPool(class UActorPool* InPool)
 {
 	UE_LOG(LogTemp, Warning, TEXT("[%s] Setting Pool %s"), *(this->GetName()), *(InPool->GetName()));
-
 	Pool = InPool;
+ 
+	if (ensure(Pool))
+	{
+		PositionNavMeshBoundsColume();
+	}
+}
+
+void ATile::PositionNavMeshBoundsColume()
+{
+	NavMeshBoundsVolume = Pool->Checkout();
+	if (ensure(NavMeshBoundsVolume))
+	{
+		NavMeshBoundsVolume->SetActorLocation(GetActorLocation());
+	}	
 }
 
 // Called when the game starts or when spawned
@@ -31,6 +44,17 @@ void ATile::BeginPlay()
 	
 	//CanSpawnAtLocation(GetActorLocation(), 300);
 
+}
+
+void ATile::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+	Super::EndPlay(EndPlayReason);
+
+	if (ensure(Pool))
+	{
+		Pool->Return(NavMeshBoundsVolume);
+	}
+	//UE_LOG(LogTemp, Warning, TEXT("[%s] EndPlay"), *GetName());
 }
 
 // Called every frame

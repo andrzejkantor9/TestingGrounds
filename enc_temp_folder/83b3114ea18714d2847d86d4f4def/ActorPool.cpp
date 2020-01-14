@@ -41,17 +41,10 @@ void UActorPool::Return(AActor* ActorToReturn)
 {
 	if (ensure(ActorToReturn))
 	{
-		UE_LOG(LogTemp, Warning, TEXT("[%s] Actor returned {%s}"), *GetName(), *ActorToReturn->GetName());
+		UE_LOG(LogTemp, Warning, TEXT("[%s] ActorReturned {%s}"), *GetName(), *ActorToReturn->GetName());
 	}	
 }
 void UActorPool::Add(AActor* ActorToAdd)
 {
-	if (ensure(ActorToAdd))
-	{
-		UE_LOG(LogTemp, Warning, TEXT("[%s] Actor added {%s}"), *GetName(), *ActorToAdd->GetName());
-	}
-	else
-	{
-		UE_LOG(LogTemp, Warning, TEXT("[%s] Nullptr actor added {%s}"), *GetName());
-	}
+
 }
