@@ -6,6 +6,9 @@
 #include "Runtime/Engine/Public/WorldCollision.h"
 #include "DrawDebugHelpers.h"
 #include "TimerManager.h"
+#include "NavigationSystem.h"
+#include "AI/NavigationSystemBase.h"
+#include "NavMesh/NavMeshBoundsVolume.h"
 
 #include "ActorPool.h"
 
@@ -33,9 +36,18 @@ void ATile::PositionNavMeshBoundsVolume()
 	NavMeshBoundsVolume = Pool->Checkout();
 	if (ensure(NavMeshBoundsVolume))
 	{
-		NavMeshBoundsVolume->SetActorLocation(GetActorLocation());
+		NavMeshBoundsVolume->SetActorLocation(GetActorLocation() + NavigationBoundsOffset);
 		UE_LOG(LogTemp, Warning, TEXT("[%s] Checked out: {%s}"), *GetName(), *NavMeshBoundsVolume->GetName());
+		if (ensure(GetWorld() && GetWorld()->GetNavigationSystem()))
+		{
+			//GetWorld()->GetNavigationSystem()->Build();
+			FNavigationSystem::Build(*GetWorld());
+		}
 	}	
+	else
+	{
+		UE_LOG(LogTemp, Error, TEXT("[%s] Not enough NavMeshes in pool."), *GetName());
+	}
 }
 
 // Called when the game starts or when spawned
