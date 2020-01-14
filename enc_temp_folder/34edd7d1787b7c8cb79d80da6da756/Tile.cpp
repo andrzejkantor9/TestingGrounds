@@ -6,8 +6,6 @@
 #include "Runtime/Engine/Public/WorldCollision.h"
 #include "DrawDebugHelpers.h"
 
-#include "ActorPool.h"
-
 // Sets default values
 ATile::ATile()
 {
@@ -18,8 +16,6 @@ ATile::ATile()
 
 void ATile::SetPool(class UActorPool* InPool)
 {
-	UE_LOG(LogTemp, Warning, TEXT("[%s] Setting Pool %s"), *(this->GetName()), *(InPool->GetName()));
-
 	Pool = InPool;
 }
 

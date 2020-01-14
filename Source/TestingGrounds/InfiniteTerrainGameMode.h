@@ -14,9 +14,14 @@ class TESTINGGROUNDS_API AInfiniteTerrainGameMode : public ATestingGroundsGameMo
 {
 	GENERATED_BODY()
 	
+public:
+	AInfiniteTerrainGameMode();
+
 protected:
 	UFUNCTION(BlueprintCallable, Category = "BoundsPool")
 		void PopulateBoundsVolumePool();
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Pool")
+		class UActorPool* NavMeshBoundsVolumePool;
 
 private: 
 	void AddToPool(class ANavMeshBoundsVolume *VolumeToAdd);
