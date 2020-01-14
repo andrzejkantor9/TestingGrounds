@@ -34,24 +34,21 @@ void UActorPool::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompo
 
 AActor* UActorPool::Checkout()
 {
-	UE_LOG(LogTemp, Warning, TEXT("[%s] Checkout."), *GetName());
-	return nullptr;
+	//UE_LOG(LogTemp, Warning, TEXT("[%s] Checkout."), *GetName());
+	if (Pool.Num() == 0)
+	{
+		return nullptr;
+	}
+	return Pool.Pop();
 }
 void UActorPool::Return(AActor* ActorToReturn)
 {
-	if (ensure(ActorToReturn))
-	{
-		UE_LOG(LogTemp, Warning, TEXT("[%s] Actor returned {%s}"), *GetName(), *ActorToReturn->GetName());
-	}	
+	Add(ActorToReturn);
 }
 void UActorPool::Add(AActor* ActorToAdd)
 {
 	if (ensure(ActorToAdd))
 	{
-		UE_LOG(LogTemp, Warning, TEXT("[%s] Actor added {%s}"), *GetName(), *ActorToAdd->GetName());
-	}
-	else
-	{
-		UE_LOG(LogTemp, Warning, TEXT("[%s] Nullptr actor added {%s}"), *GetName());
+		Pool.Push(ActorToAdd);
 	}
 }

@@ -16,10 +16,14 @@ protected:
 	virtual void BeginPlay() override;
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
+	//UPROPERTY(EditDefaultsOnly, Category = "Setup")
+		//FVector MinLocation = FVector(-300.000000, -2200.000000, -1100.000000);
+	//UPROPERTY(EditDefaultsOnly, Category = "Setup")
+		//FVector MaxLocation = FVector(3000.000000, 750.000000, -1100.000000);
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
-		FVector MinLocation = FVector(-300.000000, -2200.000000, -1100.000000);
+		FVector MinSpawnLocation = FVector(0.f, -2000.f, 200.f);//z -1000 / -1100
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
-		FVector MaxLocation = FVector(3000.000000, 750.000000, -1100.000000);
+		FVector MaxSpawnLocation = FVector(2500.f, 2000.f, 200.f);// x 0-4000
 public:	
 	// Sets default values for this actor's properties
 	ATile();
@@ -46,5 +50,5 @@ private:
 	UFUNCTION()
 	void PlaceActor(TSubclassOf<AActor> ToSpawn, FVector SpawnPoint, float Rotation, float Scale);
 
-	void PositionNavMeshBoundsColume();
+	void PositionNavMeshBoundsVolume();
 };

@@ -24,17 +24,16 @@ void ATile::SetPool(class UActorPool* InPool)
  
 	if (ensure(Pool))
 	{
-		PositionNavMeshBoundsVolume();
+		PositionNavMeshBoundsColume();
 	}
 }
 
-void ATile::PositionNavMeshBoundsVolume()
+void ATile::PositionNavMeshBoundsColume()
 {
 	NavMeshBoundsVolume = Pool->Checkout();
 	if (ensure(NavMeshBoundsVolume))
 	{
 		NavMeshBoundsVolume->SetActorLocation(GetActorLocation());
-		UE_LOG(LogTemp, Warning, TEXT("[%s] Checked out: {%s}"), *GetName(), *NavMeshBoundsVolume->GetName());
 	}	
 }
 
