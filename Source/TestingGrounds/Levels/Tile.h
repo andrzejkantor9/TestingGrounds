@@ -34,10 +34,14 @@ public:
 
 private:
 	UActorPool* Pool;
-	
+
+	UFUNCTION()
+	void DelayedPlaceActors(TSubclassOf<AActor> ToSpawn, int MinSpawn = 1, int MaxSpawn = 1, float Radius = 500.f, float MinScale = 1.f, float MaxScale = 1.f);
+
 	bool CanSpawnAtLocation(FVector Location, float Radius);
 	
 	bool FindEmptyLocation(FVector& OutLocation, float Radius);
+	UFUNCTION()
 	void PlaceActor(TSubclassOf<AActor> ToSpawn, FVector SpawnPoint, float Rotation, float Scale);
 	
 };

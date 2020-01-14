@@ -57,7 +57,7 @@ public:
 
 private:
 	bool bCanShoot = true;
-	FTimerHandle ShootTimerHandle;
+	FTimerHandle SpawnMeshesTimerHandle;
 
 	UFUNCTION()
 		void AllowShooting();

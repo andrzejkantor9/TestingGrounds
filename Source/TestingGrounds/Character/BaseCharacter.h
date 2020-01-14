@@ -29,7 +29,7 @@ private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 		AGun* Gun = nullptr;
 
-	FTimerHandle ShootTimerHandle;
+	FTimerHandle SpawnMeshesTimerHandle;
 public:
 	UFUNCTION(BlueprintCallable, Category = "Shooting")
 		void PullTrigger();

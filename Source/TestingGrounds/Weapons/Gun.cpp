@@ -48,7 +48,7 @@ void AGun::AllowShooting()
 	bCanShoot = true;
 	if (GetWorld())
 	{
-		GetWorld()->GetTimerManager().ClearTimer(ShootTimerHandle);
+		GetWorld()->GetTimerManager().ClearTimer(SpawnMeshesTimerHandle);
 	}
 }
 
@@ -66,7 +66,7 @@ void AGun::OnFire()
 		FTimerDelegate ShootingTimerDelegate;
 		ShootingTimerDelegate.BindUFunction(this, FName("AllowShooting"));
 
-		GetWorldTimerManager().SetTimer(ShootTimerHandle, ShootingTimerDelegate, .1f, false, .4f);
+		GetWorldTimerManager().SetTimer(SpawnMeshesTimerHandle, ShootingTimerDelegate, .1f, false, .4f);
 
 	}
 	if (ProjectileClass != NULL)

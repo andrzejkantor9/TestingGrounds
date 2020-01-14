@@ -5,6 +5,9 @@
 
 #include "Runtime/Engine/Public/WorldCollision.h"
 #include "DrawDebugHelpers.h"
+#include "TimerManager.h"
+
+#include "ActorPool.h"
 
 // Sets default values
 ATile::ATile()
@@ -16,6 +19,8 @@ ATile::ATile()
 
 void ATile::SetPool(class UActorPool* InPool)
 {
+	UE_LOG(LogTemp, Warning, TEXT("[%s] Setting Pool %s"), *(this->GetName()), *(InPool->GetName()));
+
 	Pool = InPool;
 }
 
@@ -37,6 +42,21 @@ void ATile::Tick(float DeltaTime)
 
 void ATile::PlaceActors(TSubclassOf<AActor> ToSpawn, int MinSpawn, int MaxSpawn, float Radius, float MinScale, float MaxScale)
 {
+	FTimerHandle SpawnMeshesTimerHandle;
+	FTimerDelegate SpawnMeshesTimerDelegate;
+
+	//TODO write simple timer like BP Delay
+	//reduce hitches
+	SpawnMeshesTimerDelegate.BindUFunction(this, FName("DelayedPlaceActors"), ToSpawn, MinSpawn, MaxSpawn, Radius, MinScale, MaxScale);
+	GetWorldTimerManager().SetTimer(SpawnMeshesTimerHandle, SpawnMeshesTimerDelegate, .2f, false);
+	//DelayedPlaceActors(ToSpawn, MinSpawn, MaxSpawn, Radius, MinScale, MaxScale);
+}
+
+void ATile::DelayedPlaceActors(TSubclassOf<AActor> ToSpawn, int MinSpawn, int MaxSpawn, float Radius, float MinScale, float MaxScale)
+{
+	//FTimerHandle SpawnMeshesTimerHandle[100];
+	//FTimerDelegate SpawnMeshesTimerDelegate[100];
+
 	int32 NumberToSpawn = FMath::RandRange(MinSpawn, MaxSpawn); 
 	for (size_t i = 0; i < NumberToSpawn; i++)
 	{
@@ -45,7 +65,14 @@ void ATile::PlaceActors(TSubclassOf<AActor> ToSpawn, int MinSpawn, int MaxSpawn,
 		if (FindEmptyLocation(SpawnPoint, Radius * RandomScale))
 		{
 			float RandomRotation = FMath::RandRange(-180.f, 180.f);
-			PlaceActor(ToSpawn, SpawnPoint, RandomRotation, RandomScale);
+
+			//reduce hitches
+			FTimerHandle SpawnMeshesTimerHandle;
+			FTimerDelegate SpawnMeshesTimerDelegate;
+			SpawnMeshesTimerDelegate.BindUFunction(this, FName("PlaceActor"), ToSpawn, SpawnPoint, RandomRotation, RandomScale);
+			GetWorldTimerManager().SetTimer(SpawnMeshesTimerHandle, SpawnMeshesTimerDelegate, .1f * static_cast<float>(i), false);
+
+			//PlaceActor(ToSpawn, SpawnPoint, RandomRotation, RandomScale);
 		}	
 
 		//UE_LOG(LogTemp, Warning, TEXT("SpawnPoint: %s"), *SpawnPoint.ToCompactString());

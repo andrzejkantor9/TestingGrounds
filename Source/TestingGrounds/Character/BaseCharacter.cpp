@@ -89,7 +89,7 @@ void ABaseCharacter::PullTrigger()
 	FTimerDelegate ShootingTimerDelegate;
 	ShootingTimerDelegate.BindUFunction(Gun, FName("OnFire"));
 
-	GetWorldTimerManager().SetTimer(ShootTimerHandle, ShootingTimerDelegate, .43f, true, .43f);
+	GetWorldTimerManager().SetTimer(SpawnMeshesTimerHandle, ShootingTimerDelegate, .43f, true, .43f);
 	Gun->OnFire();
 }
 
@@ -97,6 +97,6 @@ void ABaseCharacter::StopFiring()
 {
 	if (ensure(GetWorld()))
 	{
-		GetWorld()->GetTimerManager().ClearTimer(ShootTimerHandle);
+		GetWorld()->GetTimerManager().ClearTimer(SpawnMeshesTimerHandle);
 	}
 }
