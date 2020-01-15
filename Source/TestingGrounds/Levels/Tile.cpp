@@ -90,13 +90,12 @@ void ATile::PlaceAIPawns(TSubclassOf<APawn> ToSpawn, int MinSpawn, int MaxSpawn,
 void ATile::PlaceAIPawn(TSubclassOf<APawn> ToSpawn, FSpawnPosition SpawnPosition)
 {
 	APawn* Spawned = nullptr;
+	FRotator Rotation = FRotator(0, SpawnPosition.Rotation, 0);
 	if (ensure(GetWorld()))
-		Spawned = GetWorld()->SpawnActor<APawn>(ToSpawn);
+		Spawned = GetWorld()->SpawnActor<APawn>(ToSpawn, SpawnPosition.Location, Rotation);
 	if (Spawned)
 	{
-		Spawned->SetActorRelativeLocation(SpawnPosition.Location);
 		Spawned->AttachToActor(this, FAttachmentTransformRules(EAttachmentRule::KeepRelative, false));
-		Spawned->SetActorRotation(FRotator(0, SpawnPosition.Rotation, 0));
 
 		Spawned->SpawnDefaultController();
 		Spawned->Tags.Add(FName("Enemy"));
