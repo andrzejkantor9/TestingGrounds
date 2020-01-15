@@ -67,7 +67,16 @@ void ATile::EndPlay(const EEndPlayReason::Type EndPlayReason)
 	{
 		Pool->Return(NavMeshBoundsVolume);
 	}
-	//UE_LOG(LogTemp, Warning, TEXT("[%s] EndPlay"), *GetName());
+	
+	if (Trash.Num() != 0)
+	{
+		AActor *Prop;
+		while (Trash.Num()!=0)
+		{
+			Prop = Trash.Pop();
+			Prop->Destroy();
+		}
+	}
 }
 
 // Called every frame
@@ -178,6 +187,7 @@ void ATile::PlaceActor(TSubclassOf<AActor> ToSpawn, const FSpawnPosition& SpawnP
 		Spawned = GetWorld()->SpawnActor<AActor>(ToSpawn);
 	if (Spawned)
 	{
+		Trash.Add(Spawned);
 		Spawned->SetActorRelativeLocation(SpawnPosition.Location);
 		Spawned->AttachToActor(this, FAttachmentTransformRules(EAttachmentRule::KeepRelative, false));
 		Spawned->SetActorRotation(FRotator(0, SpawnPosition.Rotation, 0));

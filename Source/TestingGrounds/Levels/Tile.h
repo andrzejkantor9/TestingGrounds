@@ -66,4 +66,6 @@ private:
 	void PositionNavMeshBoundsVolume();
 
 	void PlaceAIPawn(TSubclassOf<APawn> ToSpawn, FSpawnPosition SpawnPosition);
+
+	TArray<AActor*> Trash;
 };
