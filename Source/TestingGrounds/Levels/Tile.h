@@ -55,7 +55,7 @@ private:
 	UFUNCTION()
 	void DelayedPlaceActors(TSubclassOf<AActor> ToSpawn, int MinSpawn = 1, int MaxSpawn = 1, float Radius = 500.f, float MinScale = 1.f, float MaxScale = 1.f);
 
-	TArray<FSpawnPosition> RandomSpawnPositions(int MinSpawn, int MaxSpawn, float Radius, float MinScale, float MaxScale);
+	TArray<FSpawnPosition> RandomSpawnPositions(TSubclassOf<AActor> ToSpawn, int MinSpawn, int MaxSpawn, float Radius, float MinScale, float MaxScale);
 
 	bool CanSpawnAtLocation(FVector Location, float Radius);
 	
