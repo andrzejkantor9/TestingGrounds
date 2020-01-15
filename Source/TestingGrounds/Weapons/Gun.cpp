@@ -43,6 +43,11 @@ void AGun::Tick(float DeltaTime)
 
 }
 
+void AGun::DisableFiring()
+{
+	bOwnerDead = true;
+}
+
 void AGun::AllowShooting()
 {
 	bCanShoot = true;
@@ -56,7 +61,7 @@ void AGun::AllowShooting()
 void AGun::OnFire()
 {
 	// try and fire a projectile
-	if (!bCanShoot)
+	if (!bCanShoot || bOwnerDead)
 	{
 		return;
 	}

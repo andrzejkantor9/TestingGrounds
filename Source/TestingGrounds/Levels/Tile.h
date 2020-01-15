@@ -27,9 +27,9 @@ protected:
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
-		FVector MinSpawnLocation = FVector(0.f, -2000.f, 0.f);//z -1000 / -1100
+		FVector MinSpawnLocation = FVector(500.f, -2000.f, 0.f);//z -1000 / -1100
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
-		FVector MaxSpawnLocation = FVector(2500.f, 2000.f, 0.f);// x 0-4000
+		FVector MaxSpawnLocation = FVector(3300.f, 2000.f, 0.f);// x 0-4000
 
 	UPROPERTY(EditDefaultsOnly, Category = "Navigation")
 		FVector NavigationBoundsOffset = FVector(2000, 0, 0);

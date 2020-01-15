@@ -54,9 +54,11 @@ public:
 		class UAnimInstance* FPAnimInstance;
 	UPROPERTY()
 		class UAnimInstance* TPAnimInstance;
+	void DisableFiring();
 
 private:
 	bool bCanShoot = true;
+	bool bOwnerDead = false;
 	FTimerHandle SpawnMeshesTimerHandle;
 
 	UFUNCTION()
